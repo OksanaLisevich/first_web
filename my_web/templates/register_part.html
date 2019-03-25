@@ -1,0 +1,6 @@
+﻿{% if user.is_authenticated  %}
+<a href="logout">Выйти({{user.username}})</a>
+{% else %}
+<a href="register">Регистрация на сайте</a>
+<a href="login">Авторизация</a>
+{% endif %}

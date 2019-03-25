@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Редактирование</title>
+</head>
+<body>
+    <h1>Форма редактирования</h1>
+    <form method="POST" action="/my-web/update/{{book.id}}">
+        {% csrf_token %}
+        <label>Имя Фамилия автора:</label>
+        <div>
+            <select name="headline" required id="id_headline" multiple>
+                {%for m in book.headline.all%}
+                    <option disabled="disabled" style="color: green" selected>{{m}}</option>
+                {%endfor%}
+                {%for n in book_form.headline%}
+                    {{n}}
+                {%endfor%}
+            </select>
+        </div>
+        <label>Название книги:</label>
+        <div>
+            <input type="text" name="title" maxlength="200" required id="id_title" value="{{ book.title }}" />
+        </div>
+        <label>Год издания:</label>
+        <div>
+            <input type="number" name="year" min="1900" required id="id_year" value="{{ book.year }}" />
+        </div>
+        <button type="submit">Редактировать</button>
+
+    </form>
+
+</body>
+</html>

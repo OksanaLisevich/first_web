@@ -1,0 +1,133 @@
+﻿{% load staticfiles %}
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Домашняя страница</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <script src="{% static 'js/javascript.js' %}"></script>
+
+</head>
+<body>
+    <div class="block-login">{% block login %} {% include 'register_part.html' %} {% endblock %} </div>
+
+
+    <h1 align="center">ДОБРО ПОЖАЛОВАТЬ!</h1>
+
+    <p>Вашему вниманию предлогается список книг.</p>
+    <p>
+        В случае просмотра данной страницы авторизованным пользователем станут возможными некоторые
+        дополнительные функции, а именно: добавление, редактирование, удаление, поиск.
+
+    </p>
+    <table border='1' cellpadding="5px">
+        <tr style='background-color: darkmagenta; color: white;'>
+            <td>ID</td>
+            <td>Имя, фамилия автора</td>
+            <td>Название книги</td>
+            <td>Год издания</td>
+            {% if user.is_authenticated %}
+            <td></td>
+            {% endif %}
+        </tr>
+        {% for books in all_books %}
+        <tr>
+            <td>{{books.id}}</td>
+            <td>{% for v in books.headline.all %}<li>{{v.name}}</li>{%endfor%}</td>
+            <td>{{books.title}}</td>
+            <td>{{books.year}}</td>
+            {% if user.is_authenticated %}
+            <td>
+                <a href="/my-web/edit/{{ books.id }}" style="padding: 5px; margin-left:5px">Edit</a>
+                <a href="/my-web/delete/{{ books.id }}" style="padding: 5px; margin-left:5px">Delete</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    {% if user.is_authenticated %}
+    <br /><br />
+    <table border='1' cellpadding="10px">
+            <tr style='background-color: blueviolet; color: white;'>
+                <td> Добавить книгу</td>
+                <td>Добавить автора</td>
+                <td>Форма поиска</td>
+            </tr><tr>
+                     <td>
+                         <div>
+                             <form id='add-book' action="/my-web/add-book/" method='post' style="display: block; position: relative; left: 10px; top: 10px">
+                                 {% csrf_token %}
+
+                                 <label>Автор</label>
+                                 <div>{{book_form.headline}}</div>
+                                 <label>Название книги</label>
+                                 <div>{{book_form.title}}</div>
+                                 <label>Год издания</label>
+                                 <div>{{book_form.year}}</div>
+                                 <button type='submit' style="display: inline">Добавить книгу</button>
+                             </form>
+                         </div>
+                     </td>
+                     <td>
+                         <div>
+                             <form id='add-author' action="/my-web/add-author/" method='post' style="display: block; position: relative; left: 10px; top: 10px">
+                                 {% csrf_token %}
+
+                                 <label>Имя Фамилия автора</label>
+                                 <div>{{author_form.name}}</div>
+                                 <button type='submit' style="display: inline">Добавить автора</button>
+                             </form>
+                         </div>
+                     </td>
+                     <td>
+                         <div>
+                             <form action="" method='post' style="display: block; position: relative; left: 10px; top: 5px">
+                             {% csrf_token %}
+                             <label for="">Введите название книги: </label>
+                             <div>
+                                 <input name='search' type="text">
+                                 <button style="display: inline">Найти</button>
+                             </div>
+                             </form>
+
+                         <h4>Результаты поиска по "{{query}}"</h4>
+
+                         {% if empty %}
+                         <p style='color: red;'>{{empty}}</p>
+                         {% endif %}
+                         <table border='1'>
+                             <tr style='background-color: blueviolet; color: white;'>
+                                 <td>ID</td>
+                                 <td>Имя, фамилия автора</td>
+                                 <td>Название книги</td>
+                                 <td>Год издания</td>
+                             </tr>
+                             {% for elem in result_list %}
+                             <tr>
+                                 <td>{{elem.id}}</td>
+                                 <td>
+                                     {% for v in elem.headline.all %}
+
+                                     <li>{{v.name}}</li>
+                                     {%endfor%}
+                                 </td>
+                                 <td>{{elem.title}}</td>
+                                 <td>{{elem.year}}</td>
+                             </tr>
+                             {% endfor %}
+                         </table>
+                         </div>
+                     </td>
+            </tr>
+        </table>
+   
+    {% endif %}
+
+</body>
+<footer> <a href="/my-web/resume">  Резюме автора сайта </a></footer>
+</html>

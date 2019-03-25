@@ -1,0 +1,78 @@
+a {
+    display: block;
+    float: right;
+    margin-right: 25px;
+    padding: 10px 50px;
+    color: black;
+    border-radius: 15px;
+    border: 1px solid black;
+    background-color: lightblue;
+    text-decoration: none;
+    transition: color 0.5s, background 0.5s;
+}
+
+    a:hover {
+        color: white;
+        background: blue;
+        border: 1px solid blue;
+    }
+
+.block-login form{
+    clear: both;
+    margin: 0 auto;
+    border: 3px solid black;
+    width: 400px;
+}
+
+.block-login form label{
+    display:block;
+    text-align: center;
+    width: inherit;
+    margin: 5px auto;
+    font-size: 20px;
+}
+
+.block-login form input{
+    display: block;
+    margin: 5px auto;
+    width: 200px;
+    border: 1px solid black;
+    border-radius: 15px;
+    height: 25px;
+    text-align: center;
+}
+
+button{
+    display: block;
+    margin: 5px auto;
+    width: auto;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 15px;
+    background: lightblue;
+    color: black;
+    transition: background 0.5s, color 0.5s;
+}
+
+button:hover{
+    background: darkblue;
+    color: white;
+    cursor: pointer;
+}
+
+form{
+    display: block;
+    position:absolute;
+    top: 300px;
+    right: 20px;
+}
+
+footer {
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 50px;
+}
+
+

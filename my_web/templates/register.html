@@ -1,0 +1,23 @@
+﻿{% extends 'home.html' %}
+
+{% block login %}
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+    <div class="form-group">
+
+        <label for="">{{field.label}}</label>
+        <div>{{field}}</div>
+        {% if field.errors %}
+        <p>{{field.errors}}</p>
+        {% endif %}
+        </div>
+        {% endfor %}
+    <p id='error-mail'></p>
+
+
+        <button id="btn" type="submit">Зарегистрироваться</button>
+</form>
+ {% endblock %}
